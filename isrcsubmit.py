@@ -583,7 +583,9 @@ class WebService2():
                 print("(aborted)")
                 sys.exit(1)
             password = None
-            if keyring is not None and options.keyring and not self.keyring_failed:
+            if 'ISRCSUBMIT_PASSWORD' in os.environ:
+                password = os.environ['ISRCSUBMIT_PASSWORD']
+            elif keyring is not None and options.keyring and not self.keyring_failed:
                 password = keyring.get_password(options.server, self.username)
             if password is None:
                 password = getpass.getpass(
